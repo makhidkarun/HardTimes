@@ -35,13 +35,13 @@
  * Runs the given UWP information through the Virus degradation procedure, the so-called "Collapse"
  * from pages 190 to 191 in the Traveller: The New Era core rulebook.
  * @param {*} starport The UWP port code
- * @param {*} size The size of the mainworld, requires an integer, do not use neo-hex notation
- * @param {*} atmosphere The atmosphere code of the mainworld, requires an integer, do not use neo-hex notation
- * @param {*} hydrographics The hydrographics percentage of the mainworld, requires an integer, do not use neo-hex notation
- * @param {*} population The population of the mainworld, requires an integer, do not use neo-hex notation
- * @param {*} government The government UWP code of the mainworld, requires an integer, do not use neo-hex notation
- * @param {*} law The law level of the mainworld, requires an integer, do not use neo-hex notation
- * @param {*} techlevel The tech level of the mainworld, requires an integer, do not use neo-hex notation
+ * @param {*} size The size of the mainworld, requires an integer, do not use pseudohex notation
+ * @param {*} atmosphere The atmosphere code of the mainworld, requires an integer, do not use pseudohex notation
+ * @param {*} hydrographics The hydrographics percentage of the mainworld, requires an integer, do not use pseudohex notation
+ * @param {*} population The population of the mainworld, requires an integer, do not use pseudohex notation
+ * @param {*} government The government UWP code of the mainworld, requires an integer, do not use pseudohex notation
+ * @param {*} law The law level of the mainworld, requires an integer, do not use pseudohex notation
+ * @param {*} techlevel The tech level of the mainworld, requires an integer, do not use pseudohex notation
  * @param {*} population_exponent The population exponent of the mainworld.
  * @param {boolean} navalbase Whether the mainworld has a naval base
  * @param {boolean} scoutbase Whether the mainworld has a scout base
@@ -201,9 +201,9 @@ function virus_roll(num, size) {
 
 /**
  * Calculates the Maxiomum Sustainable Population based on the given factors.
- * @param {*} size requires an integer, do not use neo-hex notation
- * @param {*} atmosphere requires an integer, do not use neo-hex notation
- * @param {*} hydrographics requires an integer, do not use neo-hex notation
+ * @param {*} size requires an integer, do not use pseudohex notation
+ * @param {*} atmosphere requires an integer, do not use pseudohex notation
+ * @param {*} hydrographics requires an integer, do not use pseudohex notation
  * @returns integer
  */
 function virus_calculateMsp(size, atmosphere, hydrographics) {
@@ -224,7 +224,7 @@ function virus_calculateMsp(size, atmosphere, hydrographics) {
 
 /**
  * Calculates the techlevel decline due to interactions with Virus.
- * @param {*} techlevel requires an integer, do not use neo-hex notation
+ * @param {*} techlevel requires an integer, do not use pseudohex notation
  * @returns The decline in tech level, not the new techlevel.
  */
 function virus_techLevelDecline(techlevel) {
@@ -270,13 +270,14 @@ function virus_reduceStarport(starport, degree) {
     } else if(starport == 'E') {
         return 'X';
     }
+    return 'X'; // Required.
 }
 
 /**
- * Determines the new government for a given population based on the firus degradation routine.
+ * Determines the new government for a given population based on the Virus degradation routine.
  * This is translated back to regular Traveller values rather than those given in TNE.
  * TEDs (Technologically Elevated Dictators) are treated as a Non-Charismatic Dictator (11).
- * @param {*} population requires an integer, do not use neo-hex notation
+ * @param {*} population requires an integer, do not use pseudohex notation
  * @returns The new government code as an integer.
  */
 function virus_newGov(population) {
