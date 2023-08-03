@@ -31,6 +31,50 @@
 
 'use strict';
 
+//
+//  A test harness for the library methods.
+//
+function test_virus() {
+
+	var starport = 'A',
+		siz = 7,
+		atm = 5,
+		hyd = 5,
+		pop = 9,
+		gov = 9,
+		law = 9,
+		tl = 14,
+		population_multiplier = 5,
+		navalBase = true,
+        scoutBase = true,
+        wayStation = true,
+        depot = true;
+
+	_test_virus( starport, siz, atm, hyd, pop, gov, law, tl, population_multiplier, navalBase, scoutBase, wayStation, depot );
+}
+
+function _test_virus( starport, siz, atm, hyd, pop, gov, law, tl, population_multiplier, navalBase, scoutBase, wayStation, depot  ) {
+
+	console.log( 'inputs:' );
+	console.log( '   starport: ' + starport );
+	console.log( '   atm: ' + atm );
+	console.log( '   hyd: ' + hyd );
+	console.log( '   pop: ' + pop );
+	console.log( '   gov: ' + gov );
+	console.log( '   law: ' + law );
+	console.log( '   tl: ' + tl );
+	console.log( '   pop mult: ' + population_multiplier );
+	console.log( '   naval base: ' + navalBase );
+    console.log( '   scout base: ' + scoutBase );
+    console.log( '   way station: ' + wayStation );
+    console.log( '   depot: ' + depot );
+
+	var out = doVirus( starport, siz, atm, hyd, pop, gov, law, tl, population_multiplier, navalBase, scoutBase, wayStation, depot  );
+
+	console.log( 'output object: ' );
+	console.log( out );
+}
+
 /**
  * Runs the given UWP information through the Virus degradation procedure, the so-called "Collapse"
  * from pages 190 to 191 in the Traveller: The New Era core rulebook.

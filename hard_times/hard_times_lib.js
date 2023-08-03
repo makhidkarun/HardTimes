@@ -198,11 +198,11 @@ function doHardTimesStage1a( starport, atm, pop, gov, law, population_multiplier
 /******************************************************************************
  * 
  * @param {*} starport character. The UWP starport code ('A'..'E', 'X').
- * @param {*} hasNavalBase boolean 
- * @param {*} hasScoutBase boolean
+ * @param {boolean} hasNavalBase boolean 
+ * @param {boolean} hasScoutBase boolean
  * @param {*} frontierStatus enum( 'Safe', 'Frontier', 'Outlands', 'Wilds' ) per Hard Times.
  * @param {*} warZoneLevel integer. (0 = safe. 1 = war zone. 2 = intense war zone. 3 = black war zone.)
- * @param {*} isIsolatedWorld boolean
+ * @param {boolean} isIsolatedWorld boolean
  * @param {*} pop integer (0-15). mainworld population digit.
  * @param {*} tl integer (0-33). mainworld tech level.
  * 
