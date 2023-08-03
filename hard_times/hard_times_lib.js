@@ -82,13 +82,13 @@ function _test_hard_times( starport, siz, atm, hyd, pop, gov, law, tl, populatio
  * 11-12: atmosphere turns downright bad (but I can't quite read the text).
  * 13+ Dieback.  Atmosphere is now C.
  *
- * @param {*} starport The starport code ('A'..'E', 'X')
- * @param {*} atm The atmosphere code of the mainworld.
- * @param {*} pop The population code of the mainworld.
- * @param {*} gov The government code of the mainworld.
- * @param {*} law The law level code of the mainworld.
- * @param {*} population_multiplier The most significant digit of the population.
- * @param {*} warZoneLevel The zone of war the world is in. 0 = none. 1 = war zone. 2 = intense. 3 = black war.
+ * @param {*} starport character. The starport code ('A'..'E', 'X')
+ * @param {*} atm integer (0-15). The atmosphere code of the mainworld.  
+ * @param {*} pop integer (0-15). The population code of the mainworld.
+ * @param {*} gov integer (0-15). The government code of the mainworld.
+ * @param {*} law integer (0-18). The law level code of the mainworld.
+ * @param {*} population_multiplier integer (0-9). The most significant digit of the population.
+ * @param {*} warZoneLevel integer (0-3) The zone of war the world is in. 0 = none. 1 = war zone. 2 = intense. 3 = black war.
  * @returns An object containing the updated elements above, plus a DM for Hard Times Stage 3.
  * 
  *****************************************************************************/
@@ -197,14 +197,14 @@ function doHardTimesStage1a( starport, atm, pop, gov, law, population_multiplier
 ///////////////////////////////////////////////////////////////////////////////
 /******************************************************************************
  * 
- * @param {*} starport is the UWP starport code.
+ * @param {*} starport character. The UWP starport code ('A'..'E', 'X').
  * @param {*} hasNavalBase boolean 
  * @param {*} hasScoutBase boolean
  * @param {*} frontierStatus enum( 'Safe', 'Frontier', 'Outlands', 'Wilds' ) per Hard Times.
- * @param {*} warZoneLevel int: 0 = safe. 1 = war zone. 2 = intense war zone. 3 = black war zone.
+ * @param {*} warZoneLevel integer. (0 = safe. 1 = war zone. 2 = intense war zone. 3 = black war zone.)
  * @param {*} isIsolatedWorld boolean
- * @param {*} pop mainworld population digit
- * @param {*} tl mainworld tech level
+ * @param {*} pop integer (0-15). mainworld population digit.
+ * @param {*} tl integer (0-33). mainworld tech level.
  * 
  *****************************************************************************/
 function doHardTimesStage1b(
