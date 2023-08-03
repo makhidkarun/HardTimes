@@ -24,10 +24,15 @@
 //
 //  hard_times_lib.js
 //
-//  Methods for implementing the Hard Times rules on UWP data.
+//  Methods for implementing the Hard Times rules on UWP data (pp19-25).
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+'use strict';
+
+//
+//  A test harness for the library methods.
+//
 function test_hard_times() {
 
 	var starport = 'A',
@@ -63,25 +68,31 @@ function _test_hard_times( starport, siz, atm, hyd, pop, gov, law, tl, populatio
 	console.log( out );
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//
-// STAGE 1a. 
-//
-// A. **Biosphere**.  Roll 2D.   DMs:
-//      +1 if war zone.  +2 if intense war zone.  +3 if black war zone. 
-//      +1 if Starport A.  +1 if Population 9+.
-//
-// roll < 6 = no effect.
-// 6-8: atmosphere turns _tainted_.
-// 9-10: atmosphere turns _tainted_; pop - 1.  Apply TL-3 in **STAGE 3**.
-// 11-12: atmosphere turns downright bad (but I can't quite read the text).
-// 13+ Dieback.  Atmosphere is now C.
-//
-///////////////////////////////////////////////////////////////////////////////
-function doHardTimesStage1a( 
-      starport, a, p, g, l, 
-      population_multiplier, 
-      warZoneLevel ) {
+/******************************************************************************
+ * 
+ * STAGE 1a. 
+ *
+ * A. **Biosphere**.  Roll 2D.   DMs:
+ *      +1 if war zone.  +2 if intense war zone.  +3 if black war zone. 
+ *      +1 if Starport A.  +1 if Population 9+.
+ *
+ * roll < 6 = no effect.
+ * 6-8: atmosphere turns _tainted_.
+ * 9-10: atmosphere turns _tainted_; pop - 1.  Apply TL-3 in **STAGE 3**.
+ * 11-12: atmosphere turns downright bad (but I can't quite read the text).
+ * 13+ Dieback.  Atmosphere is now C.
+ *
+ * @param {*} starport The starport code ('A'..'E', 'X')
+ * @param {*} atm The atmosphere code of the mainworld.
+ * @param {*} pop The population code of the mainworld.
+ * @param {*} gov The government code of the mainworld.
+ * @param {*} law The law level code of the mainworld.
+ * @param {*} population_multiplier The most significant digit of the population.
+ * @param {*} warZoneLevel The zone of war the world is in. 0 = none. 1 = war zone. 2 = intense. 3 = black war.
+ * @returns An object containing the updated elements above, plus a DM for Hard Times Stage 3.
+ * 
+ *****************************************************************************/
+function doHardTimesStage1a( starport, atm, pop, gov, law, population_multiplier, warZoneLevel ) {
 
     if (warZoneLevel < 0) warZoneLevel = 0;
     if (warZoneLevel > 3) warZoneLevel = 3;
@@ -89,17 +100,17 @@ function doHardTimesStage1a(
     var roll = parseInt(Math.random() * 6) + parseInt(Math.random() * 6) + 2 + warZoneLevel;
 
     if (starport == 'A') ++roll;
-    if (p >= 9) ++roll;
+    if (pop >= 9) ++roll;
 
     var stage3TLDM = 0;
 
    if (roll > 5 ) {
       if (roll < 11 ) {
-         if (a == 3 || a == 5) --a;
-         if (a == 6 || a == 8) ++a;
+         if (atm == 3 || atm == 5) --atm;
+         if (atm == 6 || atm == 8) ++atm;
       }
       if (roll == 9 || roll == 10) {
-         --p;
+         --pop;
          stage3TLDM = -3;
       }
       if (roll == 11 || roll == 12) {
@@ -107,20 +118,25 @@ function doHardTimesStage1a(
       }
       if (roll > 12) {
          // dieback
-         p = g = l = population_multiplier = 0;
+         pop = gov = law = population_multiplier = 0;
          if (starport < 'D') starport = 'D';
-         a = 12; // Insidious
+         atm = 12; // Insidious
       }
    }
 
   // sanity
-  if (p < 0) p = 0;
+  if (pop < 0) pop = 0;
 
   // build and return response object
    var resp = { 
-      'starport': starport, 'atm': a, 'pop': p, 'gov': g, 'law': l, 
-      'population_multiplier': population_multiplier, 
-      'stage3TLDM': stage3TLDM };
+      starport: starport, 
+	  atmosphere: atm, 
+	  population: pop, 
+	  government: gov, 
+	  law: law, 
+      population_multiplier: population_multiplier, 
+      stage3TLDM: stage3TLDM 
+	};
 
    return resp;
 }
@@ -179,6 +195,18 @@ function doHardTimesStage1a(
 //		Black War Zone   +2
 //
 ///////////////////////////////////////////////////////////////////////////////
+/******************************************************************************
+ * 
+ * @param {*} starport is the UWP starport code.
+ * @param {*} hasNavalBase boolean 
+ * @param {*} hasScoutBase boolean
+ * @param {*} frontierStatus enum( 'Safe', 'Frontier', 'Outlands', 'Wilds' ) per Hard Times.
+ * @param {*} warZoneLevel int: 0 = safe. 1 = war zone. 2 = intense war zone. 3 = black war zone.
+ * @param {*} isIsolatedWorld boolean
+ * @param {*} pop mainworld population digit
+ * @param {*} tl mainworld tech level
+ * 
+ *****************************************************************************/
 function doHardTimesStage1b(
 	starport,
 	hasNavalBase,
