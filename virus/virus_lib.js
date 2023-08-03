@@ -270,10 +270,11 @@ function virus_reduceStarport(starport, degree) {
     } else if(starport == 'E') {
         return 'X';
     }
+    return 'X'; // Required.
 }
 
 /**
- * Determines the new government for a given population based on the firus degradation routine.
+ * Determines the new government for a given population based on the Virus degradation routine.
  * This is translated back to regular Traveller values rather than those given in TNE.
  * TEDs (Technologically Elevated Dictators) are treated as a Non-Charismatic Dictator (11).
  * @param {*} population requires an integer, do not use pseudohex notation
