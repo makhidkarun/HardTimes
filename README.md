@@ -1,4 +1,4 @@
-Traveller tools and resources for supporting the Hard Times and Virus milieux.
+Traveller tools and resources for supporting the various milieux.
 
 # Hard Times
 The hard_times_lib.js contains functions for automating the effects of Hard Times on a UWP.
